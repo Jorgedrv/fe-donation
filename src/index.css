@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+/* Tipografía y suavizado */
+body {
+  @apply font-sans text-gray-800 bg-base-100;
+}
