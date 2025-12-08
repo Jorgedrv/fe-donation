@@ -1,73 +1,38 @@
-import type { ReactNode } from "react";
-import clsx from "clsx";
-
 interface CardProps {
   title: string;
-  icon?: ReactNode;
-  description?: string;
-  children?: ReactNode;
+  description: string;
+  icon?: string;
+  children?: React.ReactNode;
   className?: string;
-
-  variant?: "default" | "outline" | "elevated" | "soft" | "hoverable";
-  clickable?: boolean;
 }
 
 export default function Card({
   title,
-  icon,
   description,
+  icon,
   children,
   className = "",
-  variant = "default",
-  clickable = false,
 }: CardProps) {
   return (
     <div
-      className={clsx(
-        "rounded-2xl p-8 transition bg-white",
-
-        // Default variant
-        variant === "default" && "shadow-sm",
-
-        // Elevated variant
-        variant === "elevated" && "shadow-[0_6px_20px_rgba(0,0,0,0.08)]",
-
-        // Outline variant
-        variant === "outline" && "border shadow-none",
-
-        // Soft variant
-        variant === "soft" && "bg-gray-50 shadow-sm",
-
-        // Hoverable (premium hover)
-        variant === "hoverable" &&
-          "shadow-sm hover:shadow-[0_10px_30px_rgba(0,0,0,0.08)] hover:-translate-y-1",
-
-        clickable && "cursor-pointer",
-
-        className
-      )}
+      className={`
+        bg-white p-10 rounded-3xl shadow-md border border-gray-100
+        hover:shadow-xl hover:-translate-y-1 transition-all
+        text-center max-w-sm mx-auto
+        ${className}
+      `}
     >
-      {/* ICON */}
-      {icon && (
-        <div className="text-3xl mb-3">
-          {icon}
-        </div>
-      )}
+      <div className="text-5xl mb-5">{icon}</div>
 
-      {/* TITLE */}
-      <h3 className="text-xl font-semibold text-gray-800">{title}</h3>
+      <h3 className="text-xl font-semibold text-gray-900 mb-3">
+        {title}
+      </h3>
 
-      {/* DESCRIPTION */}
-      {description && (
-        <p className="text-gray-600 mt-2">{description}</p>
-      )}
+      <p className="text-gray-600 text-sm leading-relaxed mb-6">
+        {description}
+      </p>
 
-      {/* CHILDREN */}
-      {children && (
-        <div className="mt-6">
-          {children}
-        </div>
-      )}
+      {children}
     </div>
   );
 }
