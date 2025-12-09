@@ -7,7 +7,6 @@ import { Link } from "react-router-dom";
 export default function AboutPage() {
   return (
     <div className="bg-gray-50">
-      
       {/* HERO */}
       <Section
         title="About DonationFlows"
@@ -15,16 +14,11 @@ export default function AboutPage() {
         align="center"
         className="pt-24 pb-8 bg-gradient-to-b from-white to-gray-50"
       >
-        <Container className="max-w-3xl"/>
+        <Container className="max-w-3xl" />
       </Section>
 
       {/* FEATURE CARDS */}
-      <Section
-        title=""
-        subtitle=""
-        align="center"
-        className="pb-24"
-      >
+      <Section title="" subtitle="" align="center" className="pb-24">
         <Container className="max-w-6xl">
           <div className="grid md:grid-cols-3 gap-10">
             <Card
@@ -57,7 +51,6 @@ export default function AboutPage() {
       >
         <Container className="max-w-5xl">
           <div className="grid md:grid-cols-3 gap-10">
-
             <Card
               icon="🔎"
               title="1. Discover"
@@ -88,7 +81,6 @@ export default function AboutPage() {
       >
         <Container className="max-w-6xl">
           <div className="grid md:grid-cols-4 gap-8">
-
             <Card
               icon="💡"
               title="Transparency"
@@ -124,14 +116,13 @@ export default function AboutPage() {
         className="py-24 bg-white"
       >
         <Container>
-        <Link to="/campaigns">
-          <Button size="lg" color="primary">
-            View Campaigns
-          </Button>
-        </Link>
+          <Link to="/campaigns">
+            <Button size="lg" color="primary">
+              View Campaigns
+            </Button>
+          </Link>
         </Container>
       </Section>
-
     </div>
   );
 }

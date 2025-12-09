@@ -1,73 +1,53 @@
-# React + TypeScript + Vite
+# DonationFlows
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+DonationFlows es una plataforma moderna diseñada para facilitar donaciones transparentes, simples y de alto impacto social.  
+Permite a los usuarios descubrir campañas activas, donar fácilmente y entender la diferencia real que genera su contribución.
 
-Currently, two official plugins are available:
+> **Tecnologías:** React, TypeScript, TailwindCSS y un sistema de componentes UI reusable.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## React Compiler
+## 🚀 Características principales
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### 🔍 Descubrimiento de Campañas
+- Página de campañas con cards modernas y responsivas.
+- Cada campaña incluye descripción, icono y botón directo para donar.
 
-## Expanding the ESLint configuration
+### 💸 Página de Donación
+- Vista dedicada para donar a una campaña específica.
+- Selector de monto (rápido + personalizado).
+- Resumen dinámico de la donación.
+- UI limpia y enfocada en la conversión.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### 📝 Página About moderna
+- Secciones profesionales usando componentes reutilizables (`Section`, `Card`, `Container`, `Button`).
+- Explica la misión, valores y funcionamiento de DonationFlows.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### 🎨 Sistema de componentes propio
+Componentes reutilizables para construir interfaces de forma consistente:
+- `Section`
+- `Container`
+- `Card`
+- `Button`
+- `Loading`
+- Y más...
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+---
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## 🛠️ Tecnologías utilizadas
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+- **React** — Librería principal de UI  
+- **TypeScript** — Tipado estricto y robusto  
+- **TailwindCSS** — Estilos modernos y responsivos  
+- **clsx** — Manejo sencillo de clases  
+- **React Hooks** — Estado, efectos y lógica de interfaz  
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+---
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## 📦 Instalación
+
+Clona el repositorio:
+
+```bash
+git clone https://github.com/tu-usuario/donationflows.git
+cd donationflows
