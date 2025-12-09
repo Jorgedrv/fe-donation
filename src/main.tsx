@@ -5,7 +5,8 @@ import "./index.css";
 
 import MainLayout from "./layouts/MainLayout";
 import LandingPage from "./pages/LandingPage";
-import Campaigns from "./pages/CampaignsPage";
+import CampaignsPage from "./pages/CampaignsPage";
+import AboutPage from "./pages/About";
 
 const router = createBrowserRouter([
   {
@@ -15,9 +16,9 @@ const router = createBrowserRouter([
     children: [
       { path: "/", element: <LandingPage /> },
       { path: "login", element: <div>Login Page</div> },
-      { path: "campaigns", element: <Campaigns /> },
+      { path: "campaigns", element: <CampaignsPage /> },
       { path: "donate", element: <div>Donate Page</div> },
-      { path: "about", element: <div>About Page</div> },
+      { path: "about", element: <AboutPage /> },
     ],
   },
 ]);

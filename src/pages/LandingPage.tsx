@@ -28,7 +28,6 @@ export default function LandingPage() {
             >
                 <div className="grid md:grid-cols-3 gap-10">
                     <Card
-                        variant="hoverable"
                         title="Emergency Relief"
                         icon="🔥"
                         description="Immediate support for families in critical situations."
@@ -37,7 +36,6 @@ export default function LandingPage() {
                     </Card>
 
                     <Card
-                        variant="hoverable"
                         title="Reforestation"
                         icon="🌱"
                         description="Plant trees and restore critical ecosystems around the world."
@@ -46,7 +44,6 @@ export default function LandingPage() {
                     </Card>
 
                     <Card
-                        variant="hoverable"
                         title="Animal Rescue"
                         icon="🐶"
                         description="Support rescue operations and protect abandoned animals."
