@@ -2,6 +2,7 @@ import Button from "../components/ui/Button";
 import Card from "../components/ui/Card";
 import Hero from "../components/ui/Hero";
 import Section from "../components/ui/Section";
+import { Link } from "react-router-dom";
 
 export default function LandingPage() {
   return (
@@ -16,14 +17,13 @@ export default function LandingPage() {
         }
         subtitle="Smart, transparent donation flows that create immediate impact in communities in urgent need."
         cta={
-          <Button size="lg" color="primary">
+          <Button size="lg" color="primary" as={Link} to="/campaigns">
             Donate Now
           </Button>
         }
         className="bg-gradient-to-b from-white to-[#faf5ff]"
       />
 
-      {/* Campaigns */}
       <Section
         title="Featured Campaigns"
         subtitle="Explore our most impactful projects running right now."
@@ -72,7 +72,7 @@ export default function LandingPage() {
         maxWidth="max-w-xl"
       >
         <div className="mt-10">
-          <Button size="lg" color="primary">
+          <Button size="lg" color="primary" as={Link} to="/campaigns">
             Start Donating
           </Button>
         </div>

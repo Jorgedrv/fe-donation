@@ -17,11 +17,10 @@ interface ButtonProps<T extends ElementType> {
     | "link"
     | "default";
   size?: "sm" | "md" | "lg" | "wide" | "block" | "circle" | "square";
-  variant?: "default" | "outline" | "soft" | "ghost" | "link" | "glass";
+  variant?: "default" | "outline" | "ghost" | "link" | "glass" | "soft";
   className?: string;
 }
 
-// ⭐ Generic component
 export default function Button<T extends ElementType = "button">({
   as,
   children,
@@ -31,27 +30,23 @@ export default function Button<T extends ElementType = "button">({
   className,
   ...props
 }: ButtonProps<T> & Omit<ComponentPropsWithoutRef<T>, keyof ButtonProps<T>>) {
-
   const Component = as || "button";
 
-  // DaisyUI color classes
   const colorClass = color !== "default" ? `btn-${color}` : "";
 
-  // Variants
   const variantClass =
     variant === "outline"
       ? "btn-outline"
-      : variant === "soft"
-      ? "btn-soft"
       : variant === "ghost"
       ? "btn-ghost"
+      : variant === "soft"
+      ? "bg-primary/10 text-primary border border-primary/20 hover:bg-primary/20 hover:border-primary/30 transition"
       : variant === "link"
       ? "btn-link"
       : variant === "glass"
       ? "glass"
       : "";
 
-  // Sizes
   const sizeClass =
     size === "sm"
       ? "btn-sm"
@@ -70,13 +65,7 @@ export default function Button<T extends ElementType = "button">({
   return (
     <Component
       {...props}
-      className={clsx(
-        "btn",
-        colorClass,
-        variantClass,
-        sizeClass,
-        className
-      )}
+      className={clsx("btn", colorClass, variantClass, sizeClass, className)}
     >
       {children}
     </Component>
