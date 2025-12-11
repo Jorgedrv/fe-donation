@@ -3,14 +3,24 @@ import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./index.css";
 
-import MainLayout from "./layouts/MainLayout";
 import LandingPage from "./pages/LandingPage";
+import MainLayout from "./layouts/MainLayout";
+
 import CampaignsPage from "./pages/CampaignsPage";
 import AboutPage from "./pages/AboutPage";
+
 import DonationPage from "./pages/DonatePage";
 import DonationSuccessPage from "./pages/DonationSuccessPage";
 
+import Dashboard from "./pages/DashboardPage";
+
+import LoginPage from "./pages/LoginPage";
+
 const router = createBrowserRouter([
+  {
+    path: "/login",
+    element: <LoginPage /> // 🔥 YA NO usa MainLayout
+  },
   {
     path: "/",
     element: <MainLayout />,
@@ -18,13 +28,13 @@ const router = createBrowserRouter([
     children: [
       { path: "/", element: <LandingPage /> },
 
-      { path: "login", element: <div>Login Page</div> },
-
       { path: "campaigns", element: <CampaignsPage /> },
       { path: "/campaigns/:id/donate", element: <DonationPage /> },
 
       { path: "donate", element: <DonationPage /> },
       { path: "/donation/success", element: <DonationSuccessPage /> },
+
+      { path: "/dashboard", element: <Dashboard /> },
 
       { path: "about", element: <AboutPage /> }
     ]

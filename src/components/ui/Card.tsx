@@ -15,12 +15,14 @@ export default function Card({
 }: CardProps) {
   return (
     <div
+      tabIndex={-1}
       className={`
         bg-white rounded-3xl border border-gray-100 shadow-sm
         transition-all duration-300
         hover:shadow-xl hover:-translate-y-1
         flex flex-col justify-between
         p-10 text-center
+        pointer-events-auto
         ${className}
       `}
     >
