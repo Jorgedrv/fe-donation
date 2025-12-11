@@ -63,13 +63,16 @@ export default function SignupPage() {
 
   return (
     <Section
+      auth={true}
+      padding="p-0"
       className="
-        min-h-screen flex flex-col justify-center
+        min-h-screen flex flex-col 
+        justify-start md:justify-center
         bg-gradient-to-b from-[#fafafb] to-[#eef1ff]
-        pt-10 pb-10
+        pt-10 pb-10 md:pt-0
       "
     >
-      <Container className="flex flex-col items-center animate-fadeInSlow">
+      <Container auth className="animate-fadeInSlow">
         <div className="flex flex-col items-center mb-3">
           <h1 className="text-3xl font-extrabold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
             Create Your Account
@@ -79,89 +82,92 @@ export default function SignupPage() {
           </p>
         </div>
 
-        <Card
-          className="
-            p-8 pt-6 pb-10 w-[420px] rounded-[30px] bg-white
+        <div className="w-full max-w-[420px] px-4 md:px-0">
+          <Card
+            className="
+            p-8 pt-6 pb-10 
+            w-full
+            rounded-[30px] bg-white
             shadow-[0_4px_24px_rgba(0,0,0,0.06)]
             hover:shadow-[0_8px_32px_rgba(0,0,0,0.08)]
             transition-all duration-300 animate-fadeIn
             mt-2
           "
-        >
-          <h2
-            className="
+          >
+            <h2
+              className="
               text-[26px] font-extrabold text-center mb-8 
               bg-gradient-to-r from-purple-600 to-blue-600 
               bg-clip-text text-transparent
           "
-          >
-            Sign Up
-          </h2>
+            >
+              Sign Up
+            </h2>
 
-          {error && (
-            <p className="text-red-500 text-sm text-center -mt-4 mb-3">
-              {error}
-            </p>
-          )}
+            {error && (
+              <p className="text-red-500 text-sm text-center -mt-4 mb-3">
+                {error}
+              </p>
+            )}
 
-          {success && (
-            <p className="text-green-600 text-sm text-center -mt-4 mb-3">
-              {success}
-            </p>
-          )}
+            {success && (
+              <p className="text-green-600 text-sm text-center -mt-4 mb-3">
+                {success}
+              </p>
+            )}
 
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <Input
-              label="Username"
-              labelClassName="text-left text-[0.9rem] font-medium"
-              name="username"
-              placeholder="Choose a username"
-              value={form.username}
-              onChange={handleChange}
-              className="h-12 rounded-2xl border-[1.5px] focus:ring-purple-300"
-            />
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <Input
+                label="Username"
+                labelClassName="text-left text-[0.9rem] font-medium"
+                name="username"
+                placeholder="Choose a username"
+                value={form.username}
+                onChange={handleChange}
+                className="h-12 rounded-2xl border-[1.5px] focus:ring-purple-300"
+              />
 
-            <Input
-              label="Email"
-              labelClassName="text-left text-[0.9rem] font-medium"
-              name="email"
-              placeholder="Your email address"
-              value={form.email}
-              onChange={handleChange}
-              className="h-12 rounded-2xl border-[1.5px] focus:ring-purple-300"
-            />
+              <Input
+                label="Email"
+                labelClassName="text-left text-[0.9rem] font-medium"
+                name="email"
+                placeholder="Your email address"
+                value={form.email}
+                onChange={handleChange}
+                className="h-12 rounded-2xl border-[1.5px] focus:ring-purple-300"
+              />
 
-            <Input
-              label="Password"
-              labelClassName="text-left text-[0.9rem] font-medium"
-              name="password"
-              type="password"
-              placeholder="Create a password"
-              value={form.password}
-              onChange={handleChange}
-              className="h-12 rounded-2xl border-[1.5px] focus:ring-purple-300"
-            />
+              <Input
+                label="Password"
+                labelClassName="text-left text-[0.9rem] font-medium"
+                name="password"
+                type="password"
+                placeholder="Create a password"
+                value={form.password}
+                onChange={handleChange}
+                className="h-12 rounded-2xl border-[1.5px] focus:ring-purple-300"
+              />
 
-            <Input
-              label="Confirm Password"
-              labelClassName="text-left text-[0.9rem] font-medium"
-              name="confirmPassword"
-              type="password"
-              placeholder="Repeat your password"
-              value={form.confirmPassword}
-              onChange={handleChange}
-              className="h-12 rounded-2xl border-[1.5px] focus:ring-purple-300"
-            />
+              <Input
+                label="Confirm Password"
+                labelClassName="text-left text-[0.9rem] font-medium"
+                name="confirmPassword"
+                type="password"
+                placeholder="Repeat your password"
+                value={form.confirmPassword}
+                onChange={handleChange}
+                className="h-12 rounded-2xl border-[1.5px] focus:ring-purple-300"
+              />
 
-            <Button
-              type="submit"
-              disabled={
-                !form.username ||
-                !form.email ||
-                !form.password ||
-                !form.confirmPassword
-              }
-              className={`
+              <Button
+                type="submit"
+                disabled={
+                  !form.username ||
+                  !form.email ||
+                  !form.password ||
+                  !form.confirmPassword
+                }
+                className={`
                 w-full h-12 rounded-2xl text-white font-semibold
                 bg-gradient-to-r from-[#7A5CF5] via-[#6A67F9] to-[#2D9CFF]
                 shadow-[0_4px_16px_rgba(124,58,237,0.25)]
@@ -175,21 +181,22 @@ export default function SignupPage() {
                     : "hover:brightness-105"
                 }
               `}
-            >
-              Create Account
-            </Button>
-          </form>
+              >
+                Create Account
+              </Button>
+            </form>
 
-          <p className="text-center text-sm text-gray-500 mt-6">
-            Already have an account?{" "}
-            <span
-              className="text-purple-600 font-medium cursor-pointer hover:underline"
-              onClick={() => navigate("/login")}
-            >
-              Log in
-            </span>
-          </p>
-        </Card>
+            <p className="text-center text-sm text-gray-500 mt-6">
+              Already have an account?{" "}
+              <span
+                className="text-purple-600 font-medium cursor-pointer hover:underline"
+                onClick={() => navigate("/login")}
+              >
+                Log in
+              </span>
+            </p>
+          </Card>
+        </div>
 
         <footer className="text-center text-gray-400 text-xs mt-10 pb-6">
           © {new Date().getFullYear()} DonationFlows — All rights reserved.
