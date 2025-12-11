@@ -5,18 +5,28 @@ import Button from "../components/ui/Button";
 import Input from "../components/ui/Input";
 import Loading from "../components/ui/Loading";
 
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 import axios from "axios";
 
-export default function Login() {
+export default function ResetPasswordPage() {
   const navigate = useNavigate();
+  const [params] = useSearchParams();
 
-  const [form, setForm] = useState({ username: "", password: "" });
+  const token = params.get("token") || "";
+
+  const [form, setForm] = useState({ password: "", confirm: "" });
   const [loading, setLoading] = useState(false);
 
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+
+  useEffect(() => {
+    if (!token) {
+      navigate("/login");
+    }
+  }, [token, navigate]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm({
@@ -25,33 +35,35 @@ export default function Login() {
     });
   };
 
-  if (loading) return <Loading />;
-
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError("");
+    setSuccess("");
+
+    if (!form.password || !form.confirm || form.password !== form.confirm) {
+      setError("Passwords must match.");
+      return;
+    }
+
     setLoading(true);
 
     try {
-      const res = await axios.post(
-        `${import.meta.env.VITE_API_URL}/donation/v1/auth/login`,
-        form
+      await axios.post(
+        `${import.meta.env.VITE_API_URL}/donation/v1/auth/reset-password`,
+        { token, password: form.password }
       );
 
-      const { token, user, menus } = res.data;
+      setSuccess("Password successfully updated!");
+      setLoading(false);
 
-      localStorage.setItem("token", token);
-      localStorage.setItem("user", JSON.stringify(user));
-      localStorage.setItem("menus", JSON.stringify(menus));
-
-      setTimeout(() => {
-        navigate("/dashboard");
-      }, 1200);
+      setTimeout(() => navigate("/login"), 1500);
     } catch (err) {
-      setError("Invalid credentials.");
+      setError("Invalid or expired token.");
       setLoading(false);
     }
   };
+
+  if (loading) return <Loading />;
 
   return (
     <Section
@@ -62,27 +74,11 @@ export default function Login() {
       "
     >
       <Container className="flex flex-col items-center animate-fadeInSlow">
-        <Button
-          onClick={() => navigate("/")}
-          className="
-            mb-6 px-4 py-2 rounded-xl 
-            text-gray-600 text-sm font-medium 
-            bg-white border border-gray-200
-            shadow-[0_2px_8px_rgba(0,0,0,0.05)]
-            hover:bg-gray-50 hover:border-gray-300 
-            transition flex items-center gap-2
-          "
-        >
-          ← Back to Home
-        </Button>
-
         <div className="flex flex-col items-center mb-3">
           <h1 className="text-3xl font-extrabold bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">
             DonationFlows
           </h1>
-          <p className="text-gray-600 text-sm -mt-1">
-            Manage campaigns and donations
-          </p>
+          <p className="text-gray-600 text-sm -mt-1">Reset account password</p>
         </div>
 
         <Card
@@ -99,9 +95,9 @@ export default function Login() {
               text-[26px] font-extrabold text-center mb-8 
               bg-gradient-to-r from-purple-600 to-blue-600 
               bg-clip-text text-transparent
-          "
+            "
           >
-            Welcome Back
+            Reset Password
           </h2>
 
           {error && (
@@ -110,75 +106,58 @@ export default function Login() {
             </p>
           )}
 
+          {success && (
+            <p className="text-green-600 text-sm text-center -mt-4 mb-3">
+              {success}
+            </p>
+          )}
+
           <form onSubmit={handleSubmit} className="space-y-4">
             <Input
-              label="Username"
-              labelClassName="text-left text-[0.9rem] font-medium"
-              name="username"
-              placeholder="Enter your username"
-              value={form.username}
+              label="New Password"
+              type="password"
+              name="password"
+              placeholder="Enter new password"
+              value={form.password}
               onChange={handleChange}
               className="h-12 rounded-2xl border-[1.5px] focus:ring-purple-300"
             />
 
             <Input
-              label="Password"
-              labelClassName="text-left text-[0.9rem] font-medium"
-              name="password"
+              label="Confirm Password"
               type="password"
-              placeholder="Enter your password"
-              value={form.password}
+              name="confirm"
+              placeholder="Re-enter new password"
+              value={form.confirm}
               onChange={handleChange}
               className="h-12 rounded-2xl border-[1.5px] focus:ring-purple-300"
             />
 
             <Button
               type="submit"
-              disabled={!form.username || !form.password}
+              disabled={!form.password || !form.confirm}
               className={`
                 w-full h-12 rounded-2xl text-white font-semibold
                 bg-gradient-to-r from-[#7A5CF5] via-[#6A67F9] to-[#2D9CFF]
                 shadow-[0_4px_16px_rgba(124,58,237,0.25)]
                 transition
                 ${
-                  !form.username || !form.password
+                  !form.password || !form.confirm
                     ? "opacity-50 cursor-not-allowed"
                     : "hover:brightness-105"
                 }
               `}
             >
-              Log In
+              Update Password
             </Button>
           </form>
 
-          <p
-            className="
-              text-right text-sm text-gray-500 pr-1 mt-1
-              hover:text-purple-600 transition cursor-pointer
-            "
-          >
-            <span onClick={() => navigate("/forgot-password")}>
-              Forgot password?
-            </span>
-          </p>
-
-          <p className="text-center text-sm text-gray-500 mt-6">
-            Don’t have an account?{" "}
-            <span
-              className="text-purple-600 font-medium cursor-pointer hover:underline"
-              onClick={() => navigate("/sign-up")}
-            >
-              Sign up
-            </span>
-          </p>
-
           <p className="text-center text-xs text-gray-400 mt-4 opacity-70">
-            Secure login powered by{" "}
+            Secure update powered by{" "}
             <span className="font-semibold text-gray-500">DonationFlows</span>
           </p>
         </Card>
 
-        {/* FOOTER */}
         <footer className="text-center text-gray-400 text-xs mt-10 pb-6">
           © {new Date().getFullYear()} DonationFlows — All rights reserved.
         </footer>
