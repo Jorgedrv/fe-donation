@@ -3,6 +3,7 @@ import Container from "../components/ui/Container";
 import Card from "../components/ui/Card";
 import Button from "../components/ui/Button";
 import Loading from "../components/ui/Loading";
+import Input from "../components/ui/Input";
 
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
@@ -47,11 +48,13 @@ export default function DonationPage() {
   const handleDonation = async () => {
     setProcessing(true);
     try {
-      /*const payload = {
-        donorId: 1,
-        campaignId: Number(id),
-        amount: amount
-      };*/
+      //const payload = {
+      //  donorId: 1,
+      //  campaignId: Number(id),
+      //  amount: amount
+      //};
+
+      //await donate(payload);
 
       setTimeout(() => {
         navigate(
@@ -109,7 +112,7 @@ export default function DonationPage() {
 
               <div className="mt-5">
                 <label className="text-sm text-gray-600">Custom Amount</label>
-                <input
+                <Input
                   type="number"
                   className="w-full mt-1 p-3 border rounded-xl text-gray-700"
                   value={amount}

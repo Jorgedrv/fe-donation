@@ -38,3 +38,18 @@ body {
 .animate-fade-in {
   animation: fade-in 0.4s ease-out forwards;
 }
+
+@keyframes fadeInSlow {
+  0% {
+    opacity: 0;
+    transform: translateY(10px) scale(0.98);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.animate-fadeInSlow {
+  animation: fadeInSlow 0.5s ease-out forwards;
+}
