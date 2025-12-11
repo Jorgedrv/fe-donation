@@ -15,12 +15,15 @@ import DonationSuccessPage from "./pages/DonationSuccessPage";
 import Dashboard from "./pages/DashboardPage";
 
 import LoginPage from "./pages/LoginPage";
+import SignupPage from "./pages/SignupPage";
+import ForgotPasswordPage from "./pages/ForgotPasswordPage";
+import ResetPasswordPage from "./pages/ResetPasswordPage";
 
 const router = createBrowserRouter([
-  {
-    path: "/login",
-    element: <LoginPage /> // 🔥 YA NO usa MainLayout
-  },
+  { path: "/login", element: <LoginPage /> },
+  { path: "/sign-up", element: <SignupPage /> },
+  { path: "/forgot-password", element: <ForgotPasswordPage /> },
+  { path: "/reset-password", element: <ResetPasswordPage /> },
   {
     path: "/",
     element: <MainLayout />,
