@@ -7,7 +7,7 @@ import axios from "axios";
  */
 const API_BASE_URL =
   window.location.hostname === "localhost"
-    ? "http://localhost:8080" // Backend local
+    ? "https://api.donationflows.com" // Backend local
     : import.meta.env.VITE_API_URL; // Backend prod
 
 const axiosClient = axios.create({

@@ -7,6 +7,8 @@ import LandingPage from "./pages/LandingPage";
 import MainLayout from "./layouts/MainLayout";
 
 import CampaignsPage from "./pages/CampaignsPage";
+import CampaignsManagementPage from "./pages/CampaignsManagementPage";
+
 import AboutPage from "./pages/AboutPage";
 
 import DonationPage from "./pages/DonatePage";
@@ -18,6 +20,8 @@ import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
 import ForgotPasswordPage from "./pages/ForgotPasswordPage";
 import ResetPasswordPage from "./pages/ResetPasswordPage";
+
+import UsersPage from "./pages/UserPage";
 
 const router = createBrowserRouter([
   { path: "/login", element: <LoginPage /> },
@@ -38,6 +42,8 @@ const router = createBrowserRouter([
       { path: "/donation/success", element: <DonationSuccessPage /> },
 
       { path: "/dashboard", element: <Dashboard /> },
+      { path: "/campaigns/manage", element: <CampaignsManagementPage /> },
+      { path: "/users", element: <UsersPage /> },
 
       { path: "about", element: <AboutPage /> }
     ]
