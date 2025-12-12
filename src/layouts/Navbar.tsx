@@ -82,12 +82,11 @@ export default function Navbar() {
             </>
           )}
 
-          {/* Donate Button (always visible) */}
           <Button
             size="md"
             variant="soft"
             color="primary"
-            className="shadow-sm hover:shadow-md transition-all px-6 py-2"
+            className="hidden md:inline-flex shadow-sm hover:shadow-md transition-all px-6 py-2"
             as={Link}
             to="/campaigns"
           >
