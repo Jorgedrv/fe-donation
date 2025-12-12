@@ -5,11 +5,12 @@ import Button from "../components/ui/Button";
 import Loading from "../components/ui/Loading";
 import Input from "../components/ui/Input";
 
+import ConfirmModal from "../components/common/ConfirmModal";
+
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 
 import { getCampaignById } from "../api/campaigns";
-//import { donate } from "../api/donations";
 
 interface Campaign {
   id: string;
@@ -28,6 +29,8 @@ export default function DonationPage() {
 
   const [loading, setLoading] = useState(true);
   const [processing, setProcessing] = useState(false);
+
+  const [showConfirm, setShowConfirm] = useState(false);
 
   const presetAmounts = [10, 25, 50, 100];
 
@@ -48,14 +51,6 @@ export default function DonationPage() {
   const handleDonation = async () => {
     setProcessing(true);
     try {
-      //const payload = {
-      //  donorId: 1,
-      //  campaignId: Number(id),
-      //  amount: amount
-      //};
-
-      //await donate(payload);
-
       setTimeout(() => {
         navigate(
           `/donation/success?amount=${amount}&name=${encodeURIComponent(
@@ -90,11 +85,7 @@ export default function DonationPage() {
           </div>
 
           <div className="md:col-span-2 grid md:grid-cols-2 gap-8 items-stretch">
-            <Card
-              icon="💸"
-              title="Choose Your Donation"
-              className="h-full flex flex-col"
-            >
+            <Card icon="💸" title="Choose Your Donation" className="h-full">
               <div className="grid grid-cols-2 gap-3 mt-4">
                 {presetAmounts.map((preset) => (
                   <Button
@@ -121,11 +112,7 @@ export default function DonationPage() {
               </div>
             </Card>
 
-            <Card
-              icon="📄"
-              title="Donation Summary"
-              className="h-full flex flex-col"
-            >
+            <Card icon="📄" title="Donation Summary" className="h-full">
               <div className="text-gray-700 space-y-2 mt-4">
                 <p>
                   <strong>Campaign:</strong> {campaign.name}
@@ -145,7 +132,7 @@ export default function DonationPage() {
                 color="primary"
                 disabled={processing || amount <= 0}
                 className="w-full mt-6 py-4"
-                onClick={handleDonation}
+                onClick={() => setShowConfirm(true)}
               >
                 {processing ? "Processing..." : "Complete Donation"}
               </Button>
@@ -153,6 +140,19 @@ export default function DonationPage() {
           </div>
         </div>
       </Container>
+
+      <ConfirmModal
+        open={showConfirm}
+        title="Confirm Your Donation"
+        message={`Are you sure you want to donate $${amount} to "${campaign.name}"?`}
+        confirmText="Yes, donate"
+        cancelText="Cancel"
+        onConfirm={() => {
+          setShowConfirm(false);
+          handleDonation();
+        }}
+        onCancel={() => setShowConfirm(false)}
+      />
     </div>
   );
 }

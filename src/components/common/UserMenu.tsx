@@ -48,7 +48,7 @@ export default function UserMenu({ user, menus }: UserMenuProps) {
           hover:scale-105 transition
         "
       >
-        {user.username?.charAt(0).toUpperCase()}
+        {user.name?.charAt(0).toUpperCase()}
       </button>
 
       {open && (
@@ -59,7 +59,7 @@ export default function UserMenu({ user, menus }: UserMenuProps) {
           "
         >
           <p className="px-3 py-2 text-gray-700 font-semibold border-b">
-            {user.username}
+            {`${user.name} ${user.lastname}`}
           </p>
 
           {menus?.map((m: any) => (
