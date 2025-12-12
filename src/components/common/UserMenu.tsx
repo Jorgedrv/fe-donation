@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 interface UserMenuProps {
@@ -16,7 +16,18 @@ interface UserMenuProps {
 
 export default function UserMenu({ user, menus }: UserMenuProps) {
   const [open, setOpen] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    function handleClickOutside(e: MouseEvent) {
+      if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
+        setOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   const logout = () => {
     localStorage.removeItem("token");
@@ -27,7 +38,7 @@ export default function UserMenu({ user, menus }: UserMenuProps) {
   };
 
   return (
-    <div className="relative">
+    <div ref={menuRef} className="relative">
       <button
         onClick={() => setOpen(!open)}
         className="
@@ -37,18 +48,18 @@ export default function UserMenu({ user, menus }: UserMenuProps) {
           hover:scale-105 transition
         "
       >
-        {user.username?.charAt(0).toUpperCase()}
+        {user.name?.charAt(0).toUpperCase()}
       </button>
 
       {open && (
         <div
           className="
             absolute right-0 mt-3 w-48 bg-white rounded-xl border 
-            shadow-lg p-2 animate-fade-in
+            shadow-lg p-2 animate-fade-in z-50
           "
         >
           <p className="px-3 py-2 text-gray-700 font-semibold border-b">
-            {user.username}
+            {`${user.name} ${user.lastname}`}
           </p>
 
           {menus?.map((m: any) => (

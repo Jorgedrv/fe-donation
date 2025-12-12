@@ -65,7 +65,7 @@ export default function Button<T extends ElementType = "button">({
   return (
     <Component
       {...props}
-      className={clsx("btn", colorClass, variantClass, sizeClass, className)}
+      className={clsx(className, "btn", colorClass, variantClass, sizeClass)}
     >
       {children}
     </Component>

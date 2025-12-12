@@ -8,7 +8,7 @@ import Loading from "../components/ui/Loading";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import axios from "axios";
+import axiosClient from "../api/axiosClient";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -33,10 +33,7 @@ export default function Login() {
     setLoading(true);
 
     try {
-      const res = await axios.post(
-        `${import.meta.env.VITE_API_URL}/donation/v1/auth/login`,
-        form
-      );
+      const res = await axiosClient.post("/donation/v1/auth/login", form);
 
       const { token, user, menus } = res.data;
 
