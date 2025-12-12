@@ -70,7 +70,7 @@ export default function CampaignsManagementPage() {
     {
       key: "actions",
       label: "Actions",
-      render: (c) => (
+      render: () => (
         <div className="flex justify-end">
           <Button size="sm" variant="soft">
             Edit
