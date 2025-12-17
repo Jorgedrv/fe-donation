@@ -6,6 +6,7 @@ import Table from "../components/ui/Table";
 import type { TableColumn } from "../components/ui/Table";
 
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { getAllCampaigns } from "../api/campaigns";
 
 interface Campaign {
@@ -17,14 +18,18 @@ interface Campaign {
 }
 
 export default function CampaignsManagementPage() {
+  const navigate = useNavigate();
+
   const [campaigns, setCampaigns] = useState<Campaign[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
 
+  const goNewCampaign = () => navigate("/campaigns/new");
+
   useEffect(() => {
     setTimeout(() => {
       getAllCampaigns()
-        .then((data) => setCampaigns(data))
+        .then(setCampaigns)
         .finally(() => setLoading(false));
     }, 800);
   }, []);
@@ -41,10 +46,7 @@ export default function CampaignsManagementPage() {
       label: "Icon",
       render: (c) => <span className="text-3xl">{c.icon || "🎁"}</span>
     },
-    {
-      key: "name",
-      label: "Name"
-    },
+    { key: "name", label: "Name" },
     {
       key: "description",
       label: "Description",
@@ -73,7 +75,7 @@ export default function CampaignsManagementPage() {
       render: () => (
         <div className="flex justify-end">
           <Button size="sm" variant="soft">
-            Edit
+            Manage
           </Button>
         </div>
       )
@@ -90,21 +92,22 @@ export default function CampaignsManagementPage() {
       />
 
       <Container className="max-w-7xl py-8">
-        <div className="flex justify-between items-center mb-6">
+        <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4 mb-6">
           <input
             type="text"
             placeholder="Search campaigns..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-72 px-4 py-2 border rounded-xl shadow-sm"
+            className="w-full md:w-72 px-4 py-2 border rounded-xl shadow-sm"
           />
 
-          <Button size="md" color="primary">
-            + New Campaign
-          </Button>
+          <div className="hidden md:block">
+            <Button size="md" color="primary" onClick={goNewCampaign}>
+              + New Campaign
+            </Button>
+          </div>
         </div>
 
-        {/* TABLE OR EMPTY STATE */}
         {filtered.length === 0 ? (
           <div className="text-center py-20 bg-white rounded-2xl shadow border">
             <p className="text-6xl mb-4">📭</p>
@@ -114,12 +117,66 @@ export default function CampaignsManagementPage() {
             <p className="text-gray-500 mb-6">
               Try adjusting your search or create a new campaign.
             </p>
-            <Button color="primary">+ Create Campaign</Button>
+            <Button color="primary" onClick={goNewCampaign}>
+              + Create Campaign
+            </Button>
           </div>
         ) : (
-          <Table columns={columns} data={filtered} />
+          <>
+            <div className="hidden md:block">
+              <Table columns={columns} data={filtered} />
+            </div>
+
+            <div className="md:hidden space-y-4">
+              {filtered.map((c) => (
+                <div
+                  key={c.id}
+                  className="bg-white rounded-2xl shadow border p-4 flex gap-4"
+                >
+                  <div className="text-3xl">{c.icon || "🎁"}</div>
+
+                  <div className="flex-1">
+                    <div className="flex justify-between items-start">
+                      <h4 className="font-semibold text-gray-800">{c.name}</h4>
+                      <span
+                        className={`px-2 py-0.5 text-xs rounded-full ${
+                          c.status === "ACTIVE"
+                            ? "bg-green-100 text-green-600"
+                            : "bg-red-100 text-red-600"
+                        }`}
+                      >
+                        {c.status}
+                      </span>
+                    </div>
+
+                    <p className="text-sm text-gray-600 mt-1 line-clamp-2">
+                      {c.description}
+                    </p>
+
+                    <div className="mt-3 flex justify-end">
+                      <Button size="sm" variant="soft">
+                        Manage
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </>
         )}
       </Container>
+
+      <div className="md:hidden fixed bottom-6 right-6 z-50 pb-[env(safe-area-inset-bottom)]">
+        <Button
+          aria-label="Create new campaign"
+          size="lg"
+          color="primary"
+          className="rounded-full shadow-lg w-14 h-14 flex items-center justify-center text-2xl"
+          onClick={goNewCampaign}
+        >
+          +
+        </Button>
+      </div>
     </div>
   );
 }
