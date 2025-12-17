@@ -6,6 +6,7 @@ import Table from "../components/ui/Table";
 import type { TableColumn } from "../components/ui/Table";
 
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { getAllUsers } from "../api/users";
 
 interface User {
@@ -18,14 +19,18 @@ interface User {
 }
 
 export default function UsersPage() {
+  const navigate = useNavigate();
+
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
 
+  const goNewUser = () => navigate("/users/new");
+
   useEffect(() => {
     setTimeout(() => {
       getAllUsers()
-        .then((data) => setUsers(data))
+        .then(setUsers)
         .finally(() => setLoading(false));
     }, 1000);
   }, []);
@@ -51,13 +56,11 @@ export default function UsersPage() {
             <p className="font-medium">
               {u.name} {u.lastname}
             </p>
+            <p className="text-sm text-gray-500">{u.email}</p>
           </div>
         </div>
       )
     },
-
-    { key: "email", label: "Email" },
-
     {
       key: "roles",
       label: "Roles",
@@ -71,7 +74,6 @@ export default function UsersPage() {
           </span>
         ))
     },
-
     {
       key: "status",
       label: "Status",
@@ -87,14 +89,13 @@ export default function UsersPage() {
         </span>
       )
     },
-
     {
-      key: "enabled",
-      label: "Enabled",
+      key: "actions",
+      label: "Actions",
       className: "text-right",
       render: () => (
         <Button size="sm" variant="soft">
-          Edit
+          Manage
         </Button>
       )
     }
@@ -110,29 +111,106 @@ export default function UsersPage() {
       />
 
       <Container className="max-w-6xl py-8">
-        <div className="flex justify-between items-center mb-6">
+        <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4 mb-6">
           <input
             type="text"
             placeholder="Search users..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-72 px-4 py-2 border rounded-xl shadow-sm"
+            className="w-full md:w-72 px-4 py-2 border rounded-xl shadow-sm"
           />
 
-          <Button size="md" color="primary">
-            + Add User
-          </Button>
+          <div className="hidden md:block">
+            <Button size="md" color="primary" onClick={goNewUser}>
+              + Add User
+            </Button>
+          </div>
         </div>
 
-        <Table
-          data={filtered}
-          columns={columns}
-          emptyIcon="👥"
-          emptyMessage="No users found"
-          emptyDescription="There are no users in the system yet."
-          emptyAction={<Button color="primary">+ Add User</Button>}
-        />
+        {filtered.length === 0 ? (
+          <div className="text-center py-20 bg-white rounded-2xl shadow border">
+            <p className="text-6xl mb-4">👥</p>
+            <h3 className="text-lg font-semibold text-gray-700">
+              No users found
+            </h3>
+            <p className="text-gray-500 mb-6">
+              There are no users in the system yet.
+            </p>
+            <Button color="primary" onClick={goNewUser}>
+              + Add User
+            </Button>
+          </div>
+        ) : (
+          <>
+            <div className="hidden md:block">
+              <Table data={filtered} columns={columns} />
+            </div>
+
+            <div className="md:hidden space-y-4">
+              {filtered.map((u) => (
+                <div
+                  key={u.id}
+                  className="bg-white rounded-2xl shadow border p-4 flex gap-4"
+                >
+                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-purple-500 to-blue-500 text-white flex items-center justify-center font-semibold">
+                    {u.name.charAt(0).toUpperCase()}
+                  </div>
+
+                  <div className="flex-1">
+                    <div className="flex justify-between items-start">
+                      <div>
+                        <p className="font-semibold text-gray-800">
+                          {u.name} {u.lastname}
+                        </p>
+                        <p className="text-sm text-gray-500">{u.email}</p>
+                      </div>
+
+                      <span
+                        className={`px-2 py-0.5 text-xs rounded-full ${
+                          u.status === "ACTIVE"
+                            ? "bg-green-100 text-green-600"
+                            : "bg-yellow-100 text-yellow-600"
+                        }`}
+                      >
+                        {u.status}
+                      </span>
+                    </div>
+
+                    <div className="flex flex-wrap gap-2 mt-2">
+                      {u.roles.map((r) => (
+                        <span
+                          key={r.name}
+                          className="px-2 py-0.5 text-xs rounded bg-blue-100 text-blue-600"
+                        >
+                          {r.name}
+                        </span>
+                      ))}
+                    </div>
+
+                    <div className="mt-3 flex justify-end">
+                      <Button size="sm" variant="soft">
+                        Manage
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </>
+        )}
       </Container>
+
+      <div className="md:hidden fixed bottom-6 right-6 z-50 pb-[env(safe-area-inset-bottom)]">
+        <Button
+          aria-label="Add user"
+          size="lg"
+          color="primary"
+          className="rounded-full shadow-lg w-14 h-14 flex items-center justify-center text-2xl"
+          onClick={goNewUser}
+        >
+          +
+        </Button>
+      </div>
     </div>
   );
 }
