@@ -118,10 +118,20 @@ export default function SignupPage() {
 
             <form onSubmit={handleSubmit} className="space-y-4">
               <Input
-                label="Username"
+                label="Name"
                 labelClassName="text-left text-[0.9rem] font-medium"
-                name="username"
-                placeholder="Choose a username"
+                name="name"
+                placeholder="Your name"
+                value={form.username}
+                onChange={handleChange}
+                className="h-12 rounded-2xl border-[1.5px] focus:ring-purple-300"
+              />
+
+              <Input
+                label="Lastname"
+                labelClassName="text-left text-[0.9rem] font-medium"
+                name="lastname"
+                placeholder="Your lastname"
                 value={form.username}
                 onChange={handleChange}
                 className="h-12 rounded-2xl border-[1.5px] focus:ring-purple-300"
