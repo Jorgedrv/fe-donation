@@ -13,7 +13,8 @@ export default function SignupPage() {
   const navigate = useNavigate();
 
   const [form, setForm] = useState({
-    username: "",
+    name: "",
+    lastname: "",
     email: "",
     password: "",
     confirmPassword: ""
@@ -118,11 +119,21 @@ export default function SignupPage() {
 
             <form onSubmit={handleSubmit} className="space-y-4">
               <Input
-                label="Username"
+                label="Name"
                 labelClassName="text-left text-[0.9rem] font-medium"
-                name="username"
-                placeholder="Choose a username"
-                value={form.username}
+                name="name"
+                placeholder="Your name"
+                value={form.name}
+                onChange={handleChange}
+                className="h-12 rounded-2xl border-[1.5px] focus:ring-purple-300"
+              />
+
+              <Input
+                label="Lastname"
+                labelClassName="text-left text-[0.9rem] font-medium"
+                name="lastname"
+                placeholder="Your lastname"
+                value={form.lastname}
                 onChange={handleChange}
                 className="h-12 rounded-2xl border-[1.5px] focus:ring-purple-300"
               />
@@ -162,7 +173,8 @@ export default function SignupPage() {
               <Button
                 type="submit"
                 disabled={
-                  !form.username ||
+                  !form.name ||
+                  !form.lastname ||
                   !form.email ||
                   !form.password ||
                   !form.confirmPassword
@@ -173,7 +185,8 @@ export default function SignupPage() {
                 shadow-[0_4px_16px_rgba(124,58,237,0.25)]
                 transition
                 ${
-                  !form.username ||
+                  !form.name ||
+                  !form.lastname ||
                   !form.email ||
                   !form.password ||
                   !form.confirmPassword
