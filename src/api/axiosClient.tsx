@@ -17,6 +17,10 @@ const axiosClient = axios.create({
   }
 });
 
+export async function checkSession(): Promise<void> {
+  await axiosClient.get("/auth/me");
+}
+
 axiosClient.interceptors.request.use((config) => {
   const token = localStorage.getItem("token");
   if (token) {
@@ -31,18 +35,21 @@ axiosClient.interceptors.response.use(
     const status = error.response?.status;
     const errorCode = error.response?.data?.error;
     console.error("API Error:", errorCode);
+
     if (status === 401) {
       localStorage.removeItem("token");
       localStorage.removeItem("user");
       localStorage.removeItem("menus");
 
       window.location.href = "/login";
-      return;
+      return Promise.reject(error);
     }
+
     if (status && status >= 500) {
       window.location.href = "/error";
-      return;
+      return Promise.reject(error);
     }
+    
     return Promise.reject(error);
   }
 );
